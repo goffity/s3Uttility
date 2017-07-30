@@ -42,7 +42,6 @@ public class AmazonS3BucketUtils {
 
     public Bucket createBucket(String bucketName) {
         logging.info("createBucket()");
-
         return amazonS3.createBucket(bucketName);
     }
 
@@ -53,7 +52,6 @@ public class AmazonS3BucketUtils {
 
     public void truncateBucket(Bucket bucket) {
         logging.info("truncateBucket()");
-
         deleteObjectsInBucket(bucket);
         removeVersionFromBucket(bucket);
     }
@@ -100,9 +98,7 @@ public class AmazonS3BucketUtils {
 
     public List<Grant> getBucketAccessControlList(String bucketName) {
         logging.info("getBucketAccessControlList()");
-
         AccessControlList accessControlList = amazonS3.getBucketAcl(bucketName);
         return accessControlList.getGrantsAsList();
     }
-
 }
