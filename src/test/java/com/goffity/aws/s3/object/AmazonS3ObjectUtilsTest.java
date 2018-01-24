@@ -153,12 +153,12 @@ public class AmazonS3ObjectUtilsTest {
 
     @Test
     public void getS3ObjectAccessControlList() throws Exception {
-        AccessControlList  accessControlList = mock(AccessControlList.class);
-        when(amazonS3.getObjectAcl(anyString(),anyString())).thenReturn(accessControlList);
+        AccessControlList accessControlList = mock(AccessControlList.class);
+        when(amazonS3.getObjectAcl(anyString(), anyString())).thenReturn(accessControlList);
         when(accessControlList.getGrantsAsList()).thenReturn(new ArrayList<Grant>());
 
-        amazonS3ObjectUtils.getS3ObjectAccessControlList("","");
+        amazonS3ObjectUtils.getS3ObjectAccessControlList("", "");
 
-        verify(amazonS3).getObjectAcl(anyString(),anyString());
+        verify(amazonS3).getObjectAcl(anyString(), anyString());
     }
 }

@@ -77,7 +77,7 @@ public class AmazonS3BucketUtils {
     }
 
     public void removeVersionFromBucket(Bucket bucket) {
-        logging.info("removeVersionFromBucaket()");
+        logging.info("removeVersionFromBucket()");
         logging.debug(" - removing versions from bucket");
         VersionListing version_listing = amazonS3.listVersions(new ListVersionsRequest().withBucketName(bucket.getName()));
         while (true) {

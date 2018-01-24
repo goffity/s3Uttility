@@ -289,6 +289,6 @@ gradle-app.setting
 
 .idea/
 
-
-
 # End of https://www.gitignore.io/api/osx,java,maven,linux,gradle,eclipse,windows,netbeans,intellij,sublimetext,visualstudiocode
+
+*.iml
