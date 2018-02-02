@@ -19,67 +19,71 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AmazonS3BucketUtilsTest {
+
     private final Log logging = LogFactory.getLog(AmazonS3BucketUtilsTest.class);
 
     @Mock
-    private AmazonS3 amazonS3;
+    private
+    AmazonS3 amazonS3;
 
     private Region region;
 
     private AmazonS3BucketUtils amazonS3BucketUtils;
 
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
+    private String bucketName;
+    private Bucket bucket;
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
+
+        region = Region.AP_Singapore;
+
         amazonS3BucketUtils = new AmazonS3BucketUtils(amazonS3, region);
+        bucketName = "bucket-test-" + new SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(new Date());
+
+        bucket = new Bucket(bucketName);
     }
 
     @After
-    public void tearDown() {
-
+    public void tearDown() throws Exception {
+        amazonS3BucketUtils = null;
+        reset(amazonS3);
     }
 
     @Test
-    public void createBucket() {
-        System.out.println("createBucket()");
-
-        String bucketName = "bucket-name-test-" + simpleDateFormat.format(new Date());
-
-        Bucket bucket = new Bucket(bucketName);
+    public void createBucket() throws Exception {
         when(amazonS3.createBucket(anyString())).thenReturn(bucket);
 
-        Bucket actual = amazonS3BucketUtils.createBucket(bucketName);
+        Bucket result = amazonS3BucketUtils.createBucket(bucketName);
 
-        assertNotNull(actual);
-        assertEquals(bucketName, actual.getName());
+        verify(amazonS3).createBucket(anyString());
+
+        assertNotNull(result);
+        assertEquals(bucketName, result.getName());
     }
 
     @Test
-    public void listBucket() {
-        System.out.println("listBucket()");
+    public void listBucket() throws Exception {
         List<Bucket> buckets = new ArrayList<Bucket>();
-        Bucket bucket = new Bucket();
         buckets.add(bucket);
 
         when(amazonS3.listBuckets()).thenReturn(buckets);
-        List<Bucket> bucketList = amazonS3BucketUtils.listBucket();
-        assertNotNull(bucketList);
+        List<Bucket> result = amazonS3BucketUtils.listBucket();
 
-        verify(amazonS3, times(1)).listBuckets();
+        verify(amazonS3).listBuckets();
+
+        assertNotNull(result);
+        assertNotNull(result.get(0));
+        assertEquals(bucketName, result.get(0).getName());
     }
 
     @Test
-    public void truncateBucket() {
+    public void truncateBucket() throws Exception {
     }
 
     @Test
