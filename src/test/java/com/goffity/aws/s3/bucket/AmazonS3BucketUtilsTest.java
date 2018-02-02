@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.text.SimpleDateFormat;
@@ -20,8 +19,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AmazonS3BucketUtilsTest {
@@ -30,7 +33,6 @@ public class AmazonS3BucketUtilsTest {
     @Mock
     private AmazonS3 amazonS3;
 
-    //    @Mock
     private Region region;
 
     private AmazonS3BucketUtils amazonS3BucketUtils;
@@ -38,17 +40,17 @@ public class AmazonS3BucketUtilsTest {
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         amazonS3BucketUtils = new AmazonS3BucketUtils(amazonS3, region);
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
 
     }
 
     @Test
-    public void createBucket() throws Exception {
+    public void createBucket() {
         System.out.println("createBucket()");
 
         String bucketName = "bucket-name-test-" + simpleDateFormat.format(new Date());
@@ -63,7 +65,7 @@ public class AmazonS3BucketUtilsTest {
     }
 
     @Test
-    public void listBucket() throws Exception {
+    public void listBucket() {
         System.out.println("listBucket()");
         List<Bucket> buckets = new ArrayList<Bucket>();
         Bucket bucket = new Bucket();
@@ -77,27 +79,26 @@ public class AmazonS3BucketUtilsTest {
     }
 
     @Test
-    public void truncateBucket() throws Exception {
+    public void truncateBucket() {
+    }
+
+    @Test
+    public void deleteObjectsInBucket() {
 
     }
 
     @Test
-    public void deleteObjectsInBucket() throws Exception {
+    public void removeVersionFromBucket() {
 
     }
 
     @Test
-    public void removeVersionFromBucket() throws Exception {
+    public void deleteBucket() {
 
     }
 
     @Test
-    public void deleteBucket() throws Exception {
-
-    }
-
-    @Test
-    public void getBucketAccessControlList() throws Exception {
+    public void getBucketAccessControlList() {
 
     }
 
